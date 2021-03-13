@@ -18,6 +18,8 @@
   "homepage": "https://github.com/GalliumWang/fwwb2021-data-api#readme",
   "dependencies": {
     "csv-parse": "^4.15.3",
+    "csv-writer": "^1.6.0",
+    "express": "^4.17.1",
     "node-csv": "^0.1.2"
   }
 }
