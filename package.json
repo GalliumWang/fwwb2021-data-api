@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/GalliumWang/fwwb2021-data-api/issues"
   },
-  "homepage": "https://github.com/GalliumWang/fwwb2021-data-api#readme"
+  "homepage": "https://github.com/GalliumWang/fwwb2021-data-api#readme",
+  "dependencies": {
+    "csv-parse": "^4.15.3",
+    "node-csv": "^0.1.2"
+  }
 }
