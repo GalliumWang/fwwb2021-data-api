@@ -1,0 +1,19 @@
+{
+  "name": "fwwb2021-data-api",
+  "version": "1.0.0",
+  "description": "data api for original csv data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/GalliumWang/fwwb2021-data-api.git"
+  },
+  "author": "Gallium Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GalliumWang/fwwb2021-data-api/issues"
+  },
+  "homepage": "https://github.com/GalliumWang/fwwb2021-data-api#readme"
+}
