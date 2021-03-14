@@ -1,16 +1,35 @@
-
-
 var express = require('express');
 var app = express();
 var parse = require('csv-parse');
 var fs = require("fs");
 
-var stationData;
-var parser = parse({columns: true}, function (err, records) {
-    console.log("station data file loaded");
-    stationData=records;
-});
-fs.createReadStream(__dirname+'/data/station.csv').pipe(parser);
+// TODO:set json type in header
+
+async function loadCsvData(filePath){
+    let dataPromise = new Promise(function(resolve,reject){
+
+        var filePathArray=filePath.split("/");
+        var fileName=filePathArray[filePathArray.length-1];
+    
+        var parser = parse({columns: true}, function (err, records) {
+            console.log(`csv data file ${fileName} loaded`);
+            resolve(records);
+        });
+
+        fs.createReadStream(__dirname+filePath).pipe(parser);
+
+    });
+
+    var data=await dataPromise;
+    return data;
+
+}
+
+var stationData=loadCsvData("/data/station.csv");
+stationData=await stationData;
+console.log(stationData);
+
+
 
 app.get('/station', function (req, res) {
     var stationId=req.query.id;
@@ -18,6 +37,7 @@ app.get('/station', function (req, res) {
 
     if(!(stationId^stationName)){
         res.status(400).send({ error: "invalid parameters numbers!" });
+        return;
     }
     else if(stationId){
         for(record of stationData){
@@ -27,6 +47,7 @@ app.get('/station', function (req, res) {
             }
         }
         res.status(400).send({ error: "invalid id parameter" });
+        return;
     }
     else{
         for(record of stationData){
@@ -36,9 +57,8 @@ app.get('/station', function (req, res) {
                 }
         }
         res.status(400).send({ error: "invalid name parameter" });
+        return;
     }
-    res.end();
-    return;
 })
 
 var server = app.listen(2021, function () {
