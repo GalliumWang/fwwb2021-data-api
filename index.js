@@ -6,6 +6,8 @@ var fs = require("fs");
 // TODO:set json type in header
 
 async function loadCsvData(filePath){
+    var data;
+
     let dataPromise = new Promise(function(resolve,reject){
 
         var filePathArray=filePath.split("/");
@@ -20,13 +22,28 @@ async function loadCsvData(filePath){
 
     });
 
-    return dataPromise;
-
+    var data=await dataPromise;
+    return data;
 }
 
 var stationData;
-loadCsvData("/data/station.csv").then((data)=>{
-    stationData=data;
+loadCsvData("/data/station.csv").then((result)=>{
+    stationData=result;
+});
+
+var tripData;
+loadCsvData("/data/trips.csv").then((result)=>{
+    tripData=result;
+});
+
+var userData;
+loadCsvData("/data/users.csv").then((result)=>{
+    userData=result;
+});
+
+var workdayData;
+loadCsvData("/data/workdays2020.csv").then((result)=>{
+    workdayData=result;
 });
 
 
@@ -59,6 +76,7 @@ app.get('/station', function (req, res) {
         return;
     }
 })
+
 
 var server = app.listen(2021, function () {
    var host = server.address().address
