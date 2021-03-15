@@ -222,6 +222,47 @@ app.get('/user', function (req, res) {
     }
 })
 
+app.get('/workday', function (req, res) {
+    var queryFilter=req.query.filter;
+    if(typeof queryFilter=="undefined"){
+        res.status(400).send({ error: "query filter not set!" });
+        return;
+    }
+    else if(queryFilter=="None"){
+        res.send(JSON.stringify(tripData));
+        return;
+    }
+    else if(queryFilter=="date"){
+        var date=req.query.date;
+        if(typeof date=="undefined"){
+            res.status(400).send({ error: "date parameter not set!" });
+            return;
+        }
+        for(record of workdayData){
+            if(record["日期"]==date) {
+                res.send(JSON.stringify(record));
+                return;
+                }
+        }
+        res.status(400).send({ error: "record not found" });
+        return;
+    }
+    else if(queryFilter=="attribute"){
+        var attribute=req.query.attribute;
+        if(typeof attribute=="undefined"){
+            res.status(400).send({ error: "attribute parameter not set!" });
+            return;
+        }
+        result=userData.filter((record)=>{
+            return record["属性"]==attribute;
+          });
+        res.send(JSON.stringify(result));
+        return;
+    }
+    else{
+        res.status(400).send({ error: "invalid filter type!" });
+    }
+})
 
 
 var server = app.listen(2021, function () {
