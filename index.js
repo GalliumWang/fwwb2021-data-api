@@ -46,6 +46,10 @@ loadCsvData("/data/workdays2020.csv").then((result)=>{
     workdayData=result;
 });
 
+app.get('/', function (req, res) {
+    res.redirect("https://app.swaggerhub.com/apis-docs/GalliumWang_Official/fwwb2021");
+})
+
 
 app.get('/station', function (req, res) {
     var queryFilter=req.query.filter;
