@@ -12,7 +12,7 @@ async function loadCsvData(filePath){
         var fileName=filePathArray[filePathArray.length-1];
     
         var parser = parse({columns: true}, function (err, records) {
-            console.log(`csv data file ${fileName} loaded`);
+            console.log(`csv data file (${fileName}) loaded`);
             resolve(records);
         });
 
@@ -20,15 +20,14 @@ async function loadCsvData(filePath){
 
     });
 
-    var data=await dataPromise;
-    return data;
+    return dataPromise;
 
 }
 
-var stationData=loadCsvData("/data/station.csv");
-stationData=await stationData;
-console.log(stationData);
-
+var stationData;
+loadCsvData("/data/station.csv").then((data)=>{
+    stationData=data;
+});
 
 
 app.get('/station', function (req, res) {
