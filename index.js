@@ -48,33 +48,52 @@ loadCsvData("/data/workdays2020.csv").then((result)=>{
 
 
 app.get('/station', function (req, res) {
-    var stationId=req.query.id;
-    var stationName=req.query.name;
-
-    if(!(stationId^stationName)){
-        res.status(400).send({ error: "invalid parameters numbers!" });
+    var queryFilter=req.query.filter;
+    if(typeof queryFilter=="undefined"){
+        res.status(400).send({ error: "query filter not set!" });
         return;
     }
-    else if(stationId){
+    else if(queryFilter=="None"){
+        res.send(JSON.stringify(stationData));
+        return;
+    }
+    else if(queryType=="id"){
+        var stationId=req.query.id;
+        if(typeof stationId=="undefined"){
+            res.status(400).send({ error: "id parameter not set!" });
+            return;
+        }
         for(record of stationData){
             if(record["编号"]==stationId) {
             res.send(record);
             return;
             }
         }
-        res.status(400).send({ error: "invalid id parameter" });
+        res.status(400).send({ error: "record not found" });
         return;
+
     }
-    else{
+    else if(queryType=="name"){
+        var stationName=req.query.name;
+        if(typeof stationName=="undefined"){
+            res.status(400).send({ error: "name parameter not set!" });
+            return;
+        }
         for(record of stationData){
             if(record["站点名称"]==stationName) {
                 res.send(record);
                 return;
                 }
         }
-        res.status(400).send({ error: "invalid name parameter" });
+        res.status(400).send({ error: "record not found" });
         return;
     }
+    else{
+        res.status(400).send({ error: "invalid query type!" });
+    }
+})
+
+app.get('/trip', function (req, res) {
 })
 
 
