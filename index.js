@@ -65,7 +65,7 @@ app.get('/station', function (req, res) {
         }
         for(record of stationData){
             if(record["编号"]==stationId) {
-            res.send(JSON.stringify(record));
+            res.send(JSON.stringify([record]));
             return;
             }
         }
@@ -81,7 +81,7 @@ app.get('/station', function (req, res) {
         }
         for(record of stationData){
             if(record["站点名称"]==stationName) {
-                res.send(JSON.stringify(record));
+                res.send(JSON.stringify([record]));
                 return;
                 }
         }
@@ -174,7 +174,7 @@ app.get('/user', function (req, res) {
         }
         for(record of userData){
             if(record["用户ID"]==id) {
-                res.send(JSON.stringify(record));
+                res.send(JSON.stringify([record]));
                 return;
                 }
         }
@@ -240,7 +240,7 @@ app.get('/workday', function (req, res) {
         }
         for(record of workdayData){
             if(record["日期"]==date) {
-                res.send(JSON.stringify(record));
+                res.send(JSON.stringify([record]));
                 return;
                 }
         }
