@@ -71,7 +71,6 @@ app.get('/station', function (req, res) {
         }
         res.status(400).send({ error: "record not found" });
         return;
-
     }
     else if(queryFilter=="name"){
         var stationName=req.query.name;
@@ -86,6 +85,30 @@ app.get('/station', function (req, res) {
                 }
         }
         res.status(400).send({ error: "record not found" });
+        return;
+    }
+    else if(queryFilter=="line_name"){
+        var lineName=req.query.line_name;
+        if(typeof lineName=="undefined"){
+            res.status(400).send({ error: "line_name parameter not set!" });
+            return;
+        }
+        result=stationData.filter((record)=>{
+            return record["线路"]==lineName;
+          });
+        res.send(JSON.stringify(result));
+        return;
+    }
+    else if(queryFilter=="district"){
+        var district=req.query.district;
+        if(typeof district=="undefined"){
+            res.status(400).send({ error: "district parameter not set!" });
+            return;
+        }
+        result=stationData.filter((record)=>{
+            return record["行政区域"]==district;
+          });
+        res.send(JSON.stringify(result));
         return;
     }
     else{
